@@ -59,7 +59,7 @@ export default function Post({
   };
 
   return (
-    <div className="bg-black text-white w-full sm:w-full md:w-96 lg:w-96 rounded-2xl overflow-hidden shadow-2xl">
+    <div className="bg-black text-white w-96 sm:w-full md:w-96 lg:w-96 rounded-2xl overflow-hidden shadow-2xl">
       <div className="flex items-center justify-between p-3 border-b border-gray-800">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full overflow-hidden">
