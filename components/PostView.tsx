@@ -1,15 +1,18 @@
 "use client";
 import { X, Heart, MessageCircle, Send, Bookmark, MoreHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import travelLog from '@/data/data';
+//import travelLog from '@/data/data';
+import { Trip } from '@/lib/getTrips';
 
 interface PostProps {
   id: number;
+  travelLog: Trip[];
   onClose: () => void;
 }
 
 export default function Post({
   id,
+  travelLog,
   onClose
 }: PostProps) {
 

@@ -35,7 +35,7 @@ const travelLog: Trip[] = [
     post: {
       username: 'travel_malaysia',
       location: 'Kampar Old Town',
-      profileImage: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?w=100',
+      profileImage: 'https://res.cloudinary.com/dtwabsgbw/image/upload/v1768670841/72EDC4EE-0E34-404C-8B5A-1237F222D044_1_105_c_iznkme.jpg',
       images: ['https://images.pexels.com/photos/1651166/pexels-photo-1651166.jpeg?w=800'],
       caption: 'Best Claypot Chicken Rice in town! 🥘',
       hashtag: '#KamparEats',

@@ -1,47 +1,12 @@
-"use client";
-import Mapbox from "@/components/Mapbox";
-import PostView from "@/components/PostView";
-import BottomCard from "@/components/BottomCard";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
-import { Bot } from "lucide-react";
+// app/page.tsx
+import HomeClient from "@/components/HomeClient";
+// Imagine this is a database call or an API fetch
+import { getTrips } from "@/lib/getTrips"; 
 
-export default function Home() {
-  const [selectedMarkerId, setMarkerId] = useState<number | null>(null);
-  const [showSwipe, setShowSwipe] = useState(true);
+export default async function Page() {
+  // Fetch data on the server
+  const trips = await getTrips(); 
 
-  return (
-    <div className="relative h-screen w-full overflow-hidden bg-zinc-50 font-sans">
-
-      <div className="absolute inset-0 z-0">
-        <Mapbox selectedMarker={(id) => setMarkerId(id)} />
-      </div>
-
-      // Post View
-      <AnimatePresence>
-        {(!showSwipe && selectedMarkerId != null) && (
-          <div className="absolute inset-0 z-20 flex justify-center items-center px-1 bg-white/50">
-            <motion.div
-              initial={{ y: "100vh", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: "50vh", opacity: 0, transition: { duration: 0.3 } }}
-              transition={{ type: "spring", damping: 50, stiffness: 200 }}
-              className="w-auto pointer-events-auto flex flex-col items-center"
-            >
-              <PostView id={selectedMarkerId} onClose={() => {
-                setShowSwipe(true);
-              }} />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {selectedMarkerId && (
-        <div className="absolute inset-x-0 z-20 flex justify-center bottom-0">
-          <BottomCard isOpen={showSwipe} onToggle={setShowSwipe}/>
-        </div>
-      )}
-
-    </div>
-  );
+  // Pass data to the client component
+  return <HomeClient initialTrips={trips} />;
 }

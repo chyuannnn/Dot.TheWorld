@@ -1,15 +1,16 @@
-"use client"; // Required because Mapbox uses browser APIs
+"use client"; 
 
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import travelLog from '../data/data';
+import { Trip } from '@/lib/getTrips';
 
 interface MapboxProps {
     selectedMarker: (id: any) => void;
+    travelLog: Trip[];
 }
 
-export default function Map({ selectedMarker }: MapboxProps) {
+export default function Map({ selectedMarker, travelLog }: MapboxProps) {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<mapboxgl.Map | null>(null);
 
@@ -30,7 +31,7 @@ export default function Map({ selectedMarker }: MapboxProps) {
         // Wait for the map to load before adding markers
         map.on('load', () => {
             travelLog.forEach((trip) => {
-
+                console.log("Adding marker for trip:", trip);
                 const popupContent = `
                     <div style="
                         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -82,6 +83,8 @@ export default function Map({ selectedMarker }: MapboxProps) {
                 selectedMarker(null);
             }
         });
+
+        
 
         return () => map.remove();
     }, []);
