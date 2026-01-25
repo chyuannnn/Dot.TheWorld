@@ -4,7 +4,7 @@ import PostView from "@/components/PostView";
 import BottomCard from "@/components/BottomCard";
 import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trip } from "@/data/trips";
+import { Trip } from "@/lib/getTrips";
 
 export default function HomeClient({ travelData }: { travelData: Trip[] }) {
   const [tripId, setTripId] = useState<number | null>(null);

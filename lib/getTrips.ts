@@ -1,5 +1,5 @@
 // 1. Define the interface based on your JSON structure
-interface TravelLocation {
+export interface Trip {
   id: number;
   name: string;
   city: string;
@@ -19,7 +19,7 @@ interface TravelLocation {
   };
 }
 
-export async function getTravelData(): Promise<TravelLocation[]> {
+export async function getTravelData(): Promise<Trip[]> {
   const url = process.env.TRAVEL_DATA_URL;
 
   if (!url) {
@@ -33,7 +33,7 @@ export async function getTravelData(): Promise<TravelLocation[]> {
     
     const rawData = await response.json();
 
-    return rawData.map((item: Omit<TravelLocation, 'id'>, index: number) => ({
+    return rawData.map((item: Omit<Trip, 'id'>, index: number) => ({
       ...item,
       id: index + 1
     }));
