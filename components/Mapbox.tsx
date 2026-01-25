@@ -21,7 +21,7 @@ export default function Map({ onMarkerClick, travelData }: MapboxProps) {
         const map = new mapboxgl.Map({
             container: mapContainerRef.current!,
             style: 'mapbox://styles/mapbox/streets-v12',
-            center: [-119, 37],
+            center: [101, 4],
             zoom: 4,
         });
 
