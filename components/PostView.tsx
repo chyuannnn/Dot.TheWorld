@@ -1,29 +1,27 @@
 "use client";
 import { X, Heart, MessageCircle, Send, Bookmark, MoreHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-//import travelLog from '@/data/data';
 import { Trip } from '@/lib/getTrips';
 
 interface PostProps {
-  id: number;
-  travelLog: Trip[];
+  tripData: any;
   onClose: () => void;
 }
 
 export default function Post({
-  id,
-  travelLog,
+  tripData,
   onClose
 }: PostProps) {
 
-  const trip = travelLog.find((item) => item.id === id);
-  if (!trip) return null;
-  const { post } = trip;
-  const images = post.images || [];
+  const username = tripData.post.username;
+  const location = tripData.name;
+  const profileImage = tripData.post.profileImage;
+  const images = tripData.post.images || [];
+  const caption = tripData.post.caption;
+  const hashtag = tripData.post.hashtags;
+  const date = tripData.date;
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -64,14 +62,14 @@ export default function Post({
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img
-              src={post.profileImage}
+              src={profileImage}
               alt="Profile"
               className="w-full h-full object-cover"
             />
           </div>
           <div>
-            <div className="font-bold text-sm ">{post.username}</div>
-            <div className="text-xs text-gray-400">{post.location}</div>
+            <div className="font-bold text-sm ">{username}</div>
+            <div className="text-xs text-gray-400">{location}</div>
           </div>
         </div>
         <button onClick={onClose} className="text-white hover:opacity-70 transition-opacity p-1">
@@ -107,7 +105,7 @@ export default function Post({
             </button>
 
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
-              {images.map((_, index) => (
+              {images.map((_: any, index: any) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
@@ -130,14 +128,14 @@ export default function Post({
       <div className="p-4">
         <div className="space-y-2">
           <div className="text-xs">
-            <span className="font-semibold">{post.username}</span>{' '}
-            <span className="text-gray-300">{post.caption}</span>
+            <span className="font-semibold">{username}</span>{' '}
+            <span className="text-gray-300">{caption}</span>
           </div>
           <div className="text-xs text-blue-400 font-semibold">
-            {post.hashtag}
+            {hashtag}
           </div>
           <div className="text-xs text-gray-500 pt-1">
-            {post.date}
+            {date}
           </div>
         </div>
       </div>

@@ -1,68 +1,45 @@
-export interface InstagramPostProps {
-  username?: string;
-  location?: string;
-  profileImage?: string;
-  images?: string[];
-  caption?: string;
-  hashtag?: string;
-  date?: string;
-}
-
-export interface Coordinate {
-  lat: number;
-  lng: number;
-}
-
-export interface Trip {
+// 1. Define the interface based on your JSON structure
+interface TravelLocation {
   id: number;
   name: string;
-  state: string;
+  city: string;
+  region: string;
   country: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
   date: string;
-  locations: Coordinate;
-  post: InstagramPostProps; 
+  post: {
+    username: string;
+    profileImage?: string;
+    images: string[];
+    caption: string;
+    hashtags: string[];
+  };
 }
 
-export async function getTrips(): Promise<Trip[]> {
-  const csvUrl = process.env.GOOGLE_SHEET_URL || '';
+export async function getTravelData(): Promise<TravelLocation[]> {
+  const url = process.env.TRAVEL_DATA_URL;
+
+  if (!url) {
+    console.error("Travel data URL is not defined in .env");
+    return [];
+  }
 
   try {
-    const response = await fetch(csvUrl, { next: { revalidate: 3600 } }); 
-    const csvText = await response.text();
-
-    // Regex to split by comma but ignore commas inside quotes (standard CSV behavior)
-    const rows = csvText.split(/\r?\n/).map(row => 
-      row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)?.map(val => val.replace(/"/g, "")) || []
-    );
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Failed to fetch");
     
-    const dataRows = rows.slice(1); // Skip header
+    const rawData = await response.json();
 
-    return dataRows.map((col, index) => {
-      // Map columns based on your provided sheet structure
-      return {
-        id: index, // Assigning row index as a temporary ID
-        name: col[0],
-        state: col[1],
-        country: col[2],
-        date: col[3],
-        locations: {
-          lat: parseFloat(col[4]),
-          lng: parseFloat(col[5]),
-        },
-        post: {
-          username: col[6],
-          profileImage: col[7],
-          caption: col[8],
-          hashtag: col[9],
-          date: col[3], 
-          location: `${col[0]}, ${col[1]}`, 
-          // Slice images from index 10 to 18 (image1 to image9)
-          images: col.slice(10, 19).filter(url => url && url.trim() !== "")
-        }
-      };
-    });
+    return rawData.map((item: Omit<TravelLocation, 'id'>, index: number) => ({
+      ...item,
+      id: index + 1
+    }));
+    
   } catch (error) {
-    console.error("Error fetching sheet data:", error);
+    console.error(error);
     return [];
   }
 }
