@@ -22,7 +22,7 @@ export default function Map({ onMarkerClick, travelData }: MapboxProps) {
             container: mapContainerRef.current!,
             style: 'mapbox://styles/mapbox/streets-v12',
             center: [101, 4],
-            zoom: 4,
+            zoom: 2,
         });
 
         mapRef.current = map;
@@ -95,7 +95,7 @@ export default function Map({ onMarkerClick, travelData }: MapboxProps) {
                 filter: ['!', ['has', 'point_count']],
                 paint: {
                 'circle-color': '#4264fb',
-                'circle-radius': 5,
+                'circle-radius': 6,
                 'circle-stroke-width': 2,
                 'circle-stroke-color': '#ffffff'
                 }
@@ -113,7 +113,7 @@ export default function Map({ onMarkerClick, travelData }: MapboxProps) {
                     if (err) return;
                     map.easeTo({
                         center: (features[0].geometry as any).coordinates,
-                        zoom: 7
+                        zoom: 5
                     });
                 });
             });
@@ -127,7 +127,7 @@ export default function Map({ onMarkerClick, travelData }: MapboxProps) {
 
                 map.flyTo({
                     center: coordinates,
-                    zoom: 9
+                    zoom: 7
                 });
 
                 new mapboxgl.Popup()

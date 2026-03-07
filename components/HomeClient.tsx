@@ -2,6 +2,7 @@
 import Mapbox from "@/components/Mapbox";
 import PostView from "@/components/PostView";
 import BottomCard from "@/components/BottomCard";
+import WelcomeCard from "@/components/WelcomeCard";
 import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trip } from "@/lib/getTrips";
@@ -9,6 +10,7 @@ import { Trip } from "@/lib/getTrips";
 export default function HomeClient({ travelData }: { travelData: Trip[] }) {
   const [tripId, setTripId] = useState<number | null>(null);
   const [showSwipe, setShowSwipe] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(true);
 
   const selectedTrip = travelData.find(t => t.id === tripId);
 
@@ -20,6 +22,12 @@ export default function HomeClient({ travelData }: { travelData: Trip[] }) {
           travelData={travelData} 
         />
       </div>
+
+      {showWelcome && (
+        <div className="absolute inset-0 z-50 flex justify-center items-center pointer-events-auto">
+          <WelcomeCard onClose={() => setShowWelcome(false)} />
+        </div>
+      )} 
 
       <AnimatePresence>
         {(!showSwipe && tripId != null) && (
