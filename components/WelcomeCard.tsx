@@ -28,7 +28,7 @@ export default function WelcomeCard({ onClose }: WelcomeCardProps) {
         {/* Content */}
         <div className="space-y-4 text-black leading-relaxed">
           <p>
-            This this a website that records my memories from around the world.
+            This a website that records my memories from around the world.
           </p>
           
           <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">

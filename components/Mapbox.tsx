@@ -95,7 +95,7 @@ export default function Map({ onMarkerClick, travelData }: MapboxProps) {
                 filter: ['!', ['has', 'point_count']],
                 paint: {
                 'circle-color': '#4264fb',
-                'circle-radius': 6,
+                'circle-radius': 7,
                 'circle-stroke-width': 2,
                 'circle-stroke-color': '#ffffff'
                 }
